@@ -150,17 +150,6 @@ function calculadoraBhaskara() {
             tension: 0.2
           },
           {
-            label: 'Raízes',
-            data: [
-              { x: x1.toFixed(2), y: 0 },
-              { x: x2.toFixed(2), y: 0 }
-            ],
-            borderColor: 'transparent',
-            backgroundColor: 'red',
-            pointRadius: 6,
-            showLine: false
-          },
-          {
             label: 'Vértice',
             data: [{ x: xv.toFixed(2), y: yv.toFixed(2) }],
             borderColor: 'transparent',
