@@ -24,12 +24,6 @@ function gerarExemploComDeltaPositivo() {
     </ul>
     <p>Exemplo gerado automaticamente:</p>
     <p><strong>${a}x² ${b >= 0 ? '+ ' + b : '- ' + Math.abs(b)}x ${c >= 0 ? '+ ' + c : '- ' + Math.abs(c)} = 0</strong></p>
-    <ul>
-      <li>A = ${a}</li>
-      <li>B = ${b}</li>
-      <li>C = ${c}</li>
-      <li>Δ = ${delta} → Como é positivo, essa equação tem duas raízes reais.</li>
-    </ul>
   `;
 }
 
@@ -62,64 +56,53 @@ function calculadoraBhaskara() {
     }
 
     const delta = b * b - 4 * a * c;
-    let x1, x2, explicacaoRaizes;
-
-    if (delta < 0) {
-      explicacaoRaizes = '<p>Como o Delta ficou menor que zero, não existem raízes reais. A conta para encontrar x₁ e x₂ não pode ser feita com números negativos dentro da raiz.</p>';
-    } else {
-      x1 = (-b + Math.sqrt(delta)) / (2 * a);
-      x2 = (-b - Math.sqrt(delta)) / (2 * a);
-
-      explicacaoRaizes = `
-        <p>Agora vamos calcular as raízes da equação usando a fórmula de Bhaskara:</p>
-        <p>x = (-b ± √Δ) / (2a)</p>
-        <p>Substituindo os valores:</p>
-        <p>x = (-(${b}) ± √${delta}) / (2 × ${a})</p>
-        <p>Calculando a raiz quadrada de ${delta}: √${delta} = ${Math.sqrt(delta).toFixed(2)}</p>
-        <p>Agora fazemos as duas contas:</p>
-        <p>x₁ = (-(${b}) + ${Math.sqrt(delta).toFixed(2)}) / (2 × ${a}) = ${x1.toFixed(2)}</p>
-        <p>x₂ = (-(${b}) - ${Math.sqrt(delta).toFixed(2)}) / (2 × ${a}) = ${x2.toFixed(2)}</p>
-      `;
-    }
-
+    const raizDelta = Math.sqrt(delta);
+    const x1 = (-b + raizDelta) / (2 * a);
+    const x2 = (-b - raizDelta) / (2 * a);
     const xv = -b / (2 * a);
     const yv = -delta / (4 * a);
     const concavidade = a > 0 ? 'para cima' : 'para baixo';
 
     resultado.innerHTML = `
-      <h2>Resolvendo passo a passo</h2>
+      <h2>Resolvendo a equação passo a passo</h2>
 
-      <p><strong>1. Identificamos os valores:</strong></p>
+      <p><strong>1. Identificando os valores:</strong></p>
       <p>A = ${a}, B = ${b}, C = ${c}</p>
 
-      <p><strong>2. Calculamos o Delta (Δ):</strong></p>
+      <p><strong>2. Calculando o Delta (Δ):</strong></p>
       <p>Fórmula: Δ = b² - 4ac</p>
-      <p>Primeiro fazemos b²: (${b})² = ${b * b}</p>
-      <p>Depois fazemos 4 × ${a} × ${c} = ${4 * a * c}</p>
-      <p>Agora fazemos a subtração: ${b * b} - ${4 * a * c} = ${delta}</p>
-      <p>Então, Δ = ${delta}</p>
+      <p>Substituindo os valores: Δ = (${b})² - 4 × ${a} × ${c}</p>
+      <p>Calculando: Δ = ${b * b} - ${4 * a * c}</p>
+      <p>Resultado: Δ = ${delta}</p>
 
-      <p><strong>3. Calculamos as raízes:</strong></p>
-      ${explicacaoRaizes}
+      <p><strong>3. Calculando a raiz quadrada de Δ:</strong></p>
+      <p>√Δ = √${delta} = ${raizDelta.toFixed(2)}</p>
 
-      <p><strong>4. Calculamos o vértice da parábola:</strong></p>
-      <p>Fórmula do x do vértice: xᵥ = -b / (2a)</p>
-      <p>xᵥ = -(${b}) / (2 × ${a}) = ${xv.toFixed(2)}</p>
-      <p>Fórmula do y do vértice: yᵥ = -Δ / (4a)</p>
-      <p>yᵥ = -(${delta}) / (4 × ${a}) = ${yv.toFixed(2)}</p>
+      <p><strong>4. Aplicando a fórmula de Bhaskara:</strong></p>
+      <p>Fórmula: x = (-b ± √Δ) / (2a)</p>
 
-      <p><strong>5. Concavidade da parábola:</strong></p>
-      <p>Como A = ${a}, e ele é ${a > 0 ? 'positivo' : 'negativo'}, a concavidade é voltada <strong>${concavidade}</strong>.</p>
+      <p><strong>Calculando x₁:</strong></p>
+      <p>x₁ = (-(${b}) + ${raizDelta.toFixed(2)}) / (2 × ${a})</p>
+      <p>x₁ = (${(-b).toFixed(2)} + ${raizDelta.toFixed(2)}) / ${2 * a}</p>
+      <p>x₁ = ${(x1).toFixed(2)}</p>
+
+      <p><strong>Calculando x₂:</strong></p>
+      <p>x₂ = (-(${b}) - ${raizDelta.toFixed(2)}) / (2 × ${a})</p>
+      <p>x₂ = (${(-b).toFixed(2)} - ${raizDelta.toFixed(2)}) / ${2 * a}</p>
+      <p>x₂ = ${(x2).toFixed(2)}</p>
+
+      <p><strong>5. Calculando o vértice da parábola:</strong></p>
+      <p>xᵥ = -b / (2a) = -(${b}) / (2 × ${a}) = ${xv.toFixed(2)}</p>
+      <p>yᵥ = -Δ / (4a) = -(${delta}) / (4 × ${a}) = ${yv.toFixed(2)}</p>
+
+      <p><strong>6. Concavidade da parábola:</strong></p>
+      <p>Como A = ${a}, a parábola é voltada <strong>${concavidade}</strong>.</p>
 
       <hr>
       <h3>✅ Resumo Final</h3>
       <ul>
         <li>Delta (Δ): ${delta}</li>
-        ${delta >= 0 ? `
-          <li>Raízes: x₁ = ${x1.toFixed(2)}, x₂ = ${x2.toFixed(2)}</li>
-        ` : `
-          <li>Raízes: Não existem raízes reais</li>
-        `}
+        <li>Raízes: x₁ = ${x1.toFixed(2)}, x₂ = ${x2.toFixed(2)}</li>
         <li>Vértice: (${xv.toFixed(2)}, ${yv.toFixed(2)})</li>
         <li>Concavidade: ${concavidade}</li>
       </ul>
