@@ -70,16 +70,17 @@ function calculadoraBhaskara() {
       <p>A = ${a}, B = ${b}, C = ${c}</p>
 
       <p><strong>2. Calculando o Delta (Δ):</strong></p>
-      <p>Fórmula: Δ = b² - 4ac</p>
-      <p>Substituindo os valores: Δ = (${b})² - 4 × ${a} × ${c}</p>
-      <p>Calculando: Δ = ${b * b} - ${4 * a * c}</p>
-      <p>Resultado: Δ = ${delta}</p>
+      <p>Δ = b² - 4ac</p>
+      <p>Δ = (${b})² - 4 × ${a} × ${c}</p>
+      <p>Δ = ${b * b} - 4 × ${a} × ${c}</p>
+      <p>Δ = ${b * b} - ${4 * a * c}</p>
+      <p>Δ = ${delta}</p>
 
       <p><strong>3. Calculando a raiz quadrada de Δ:</strong></p>
       <p>√Δ = √${delta} = ${raizDelta.toFixed(2)}</p>
 
       <p><strong>4. Aplicando a fórmula de Bhaskara:</strong></p>
-      <p>Fórmula: x = (-b ± √Δ) / (2a)</p>
+      <p>x = (-b ± √Δ) / (2a)</p>
 
       <p><strong>Calculando x₁:</strong></p>
       <p>x₁ = (-(${b}) + ${raizDelta.toFixed(2)}) / (2 × ${a})</p>
@@ -92,8 +93,13 @@ function calculadoraBhaskara() {
       <p>x₂ = ${(x2).toFixed(2)}</p>
 
       <p><strong>5. Calculando o vértice da parábola:</strong></p>
-      <p>xᵥ = -b / (2a) = -(${b}) / (2 × ${a}) = ${xv.toFixed(2)}</p>
-      <p>yᵥ = -Δ / (4a) = -(${delta}) / (4 × ${a}) = ${yv.toFixed(2)}</p>
+      <p>xᵥ = -b / (2a)</p>
+      <p>xᵥ = -(${b}) / (2 × ${a})</p>
+      <p>xᵥ = ${xv.toFixed(2)}</p>
+
+      <p>yᵥ = -Δ / (4a)</p>
+      <p>yᵥ = -(${delta}) / (4 × ${a})</p>
+      <p>yᵥ = ${yv.toFixed(2)}</p>
 
       <p><strong>6. Concavidade da parábola:</strong></p>
       <p>Como A = ${a}, a parábola é voltada <strong>${concavidade}</strong>.</p>
