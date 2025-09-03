@@ -1,3 +1,19 @@
+function preencherCamposViaURL() {
+  const params = new URLSearchParams(window.location.search);
+  const a = params.get('a');
+  const b = params.get('b');
+  const c = params.get('c');
+
+  if (a && b && c) {
+    document.getElementById('valorA').value = a;
+    document.getElementById('valorB').value = b;
+    document.getElementById('valorC').value = c;
+    document.getElementById('formularioBhaskara').dispatchEvent(new Event('submit'));
+  }
+}
+
+preencherCamposViaURL();
+
 function gerarExemploComDeltaPositivo() {
   let a, b, c, delta;
   do {
@@ -65,6 +81,66 @@ function calculadoraBhaskara() {
     const xv = xvNumerador / denominador;
     const yvNumerador = -delta;
     const yv = yvNumerador / (4 * a);
+
+    // Gerar resumo
+    document.getElementById('botaoGerarResumo').onclick = () => {
+        const sinalB = b >= 0 ? `+ ${b}` : `- ${Math.abs(b)}`;
+        const sinalC = c >= 0 ? `+ ${c}` : `- ${Math.abs(c)}`;
+        const equacaoFormatada = `${a}x² ${sinalB}x ${sinalC} = 0`;
+
+        const resumo = `
+        Resumo da Equação do Segundo Grau
+
+        Forma da equação:
+        ${equacaoFormatada}
+
+        Valores:
+        A = ${a}
+        B = ${b}
+        C = ${c}
+
+        Cálculo do Delta:
+        Δ = (${b})² - 4 × ${a} × ${c} = ${delta}
+
+        Raízes:
+        x₁ = ${x1.toFixed(2)}
+        x₂ = ${x2.toFixed(2)}
+
+        Vértice da parábola:
+        xᵥ = ${xv.toFixed(2)}
+        yᵥ = ${yv.toFixed(2)}
+
+        Concavidade:
+        ${a > 0 ? 'Voltada para cima' : 'Voltada para baixo'}
+        `;
+
+        const campoResumo = document.getElementById('campoResumo');
+        campoResumo.value = resumo;
+        document.getElementById('botaoCopiarResumo').style.display = 'inline-block';
+        document.getElementById('botaoBaixarResumo').style.display = 'inline-block';
+
+        // Copiar resumo
+        document.getElementById('botaoCopiarResumo').onclick = () => {
+            campoResumo.select();
+            document.execCommand('copy');
+        };
+
+        // Baixar resumo
+        document.getElementById('botaoBaixarResumo').onclick = () => {
+            const texto = campoResumo.value;
+            const blob = new Blob([texto], { type: 'text/plain' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'resumo-bhaskara.txt';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        };
+    };
+
+
+
+
 
     resultado.innerHTML = `
       <h2>Resolvendo a equação passo a passo</h2>
@@ -236,6 +312,15 @@ function calculadoraBhaskara() {
       }]
     });
     
+    const botaoBaixar = document.getElementById('botaoBaixarGrafico');
+    botaoBaixar.addEventListener('click', function () {
+        const link = document.createElement('a');
+        link.href = document.getElementById('graficoParabola').toDataURL('image/png');
+        link.download = 'grafico-bhaskara.png';
+        link.click();
+    });
+
+
     botaoResetar.addEventListener('click', function () {
       form.reset();
       resultado.innerHTML = '';
@@ -246,6 +331,7 @@ function calculadoraBhaskara() {
     });
   });
 }
+
 
 gerarExemploComDeltaPositivo()
 calculadoraBhaskara()
