@@ -244,7 +244,8 @@ function calculadoraBhaskara() {
         window.graficoBhaskara.destroy();
       }
     });
-
+  });
+}
 
 gerarExemploComDeltaPositivo();
 calculadoraBhaskara();
