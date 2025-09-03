@@ -136,6 +136,10 @@ function calculadoraBhaskara() {
     if (window.graficoBhaskara) {
       window.graficoBhaskara.destroy();
     }
+    
+    const minX = Math.min(x1, x2, xv) - 2;
+    const maxX = Math.max(x1, x2, xv) + 2;
+    
     window.graficoBhaskara = new Chart(ctx, {
       type: 'line',
       data: {
@@ -190,18 +194,17 @@ function calculadoraBhaskara() {
         },
         scales: {
           x: {
-              type: 'linear',
-              title: {
-                display: true,
-                text: 'x'
-              },
-              grid: {
-                drawOnChartArea: true
-              },
-              min: Math.min(x1, x2, xv) - 2,
-              max: Math.max(x1, x2, xv) + 2
+            type: 'linear',
+            min: minX,
+            max: maxX,
+            title: {
+              display: true,
+              text: 'x'
+            },
+            grid: {
+              drawOnChartArea: true
+            }
           },
-
           y: {
             title: {
               display: true,
@@ -235,6 +238,7 @@ function calculadoraBhaskara() {
         }
       }]
     });
+
 
     botaoResetar.addEventListener('click', function () {
       form.reset();
