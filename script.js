@@ -1,16 +1,18 @@
 function gerarExemploComDeltaPositivo() {
-    let a, b, c, delta;
-    do {
-        a = Math.floor(Math.random() * 5) + 1;
-        b = Math.floor(Math.random() * 20) - 10;
-        c = Math.floor(Math.random() * 10);
-        delta = b * b - 4 * a * c;
-    } while (delta <= 0);
-    document.getElementById('valorA').placeholder = `Ex: ${a}`;
-    document.getElementById('valorB').placeholder = `Ex: ${b}`;
-    document.getElementById('valorC').placeholder = `Ex: ${c}`;
-    const explicacao = document.querySelector('.explicacao');
-    explicacao.innerHTML = `
+  let a, b, c, delta;
+  do {
+    a = Math.floor(Math.random() * 5) + 1;
+    b = Math.floor(Math.random() * 20) - 10;
+    c = Math.floor(Math.random() * 10);
+    delta = b * b - 4 * a * c;
+  } while (delta <= 0);
+
+  document.getElementById('valorA').placeholder = `Ex: ${a}`;
+  document.getElementById('valorB').placeholder = `Ex: ${b}`;
+  document.getElementById('valorC').placeholder = `Ex: ${c}`;
+
+  const explicacao = document.querySelector('.explicacao');
+  explicacao.innerHTML = `
     <h3>Como identificar A, B e C?</h3>
     <p>A equação do segundo grau tem esta forma:</p>
     <p><strong>ax² + bx + c = 0</strong></p>
@@ -25,46 +27,46 @@ function gerarExemploComDeltaPositivo() {
 }
 
 function calculadoraBhaskara() {
-    const form = document.getElementById('formularioBhaskara');
-    const resultado = document.querySelector('.resultado');
-    const botaoResetar = document.getElementById('botaoResetar');
-    const botaoAjuda = document.getElementById('botaoAjuda');
-    const explicacao = document.querySelector('.explicacao');
+  const form = document.getElementById('formularioBhaskara');
+  const resultado = document.querySelector('.resultado');
+  const botaoResetar = document.getElementById('botaoResetar');
+  const botaoAjuda = document.getElementById('botaoAjuda');
+  const explicacao = document.querySelector('.explicacao');
 
-    botaoAjuda.addEventListener('click', () => {
-        explicacao.style.display = explicacao.style.display === 'none' ? 'block' : 'none';
-    });
+  botaoAjuda.addEventListener('click', () => {
+    explicacao.style.display = explicacao.style.display === 'none' ? 'block' : 'none';
+  });
 
-    form.addEventListener('submit', function (event) {
-        event.preventDefault();
+  form.addEventListener('submit', function (event) {
+    event.preventDefault();
 
-        const a = parseFloat(document.getElementById('valorA').value.replace(',', '.'));
-        const b = parseFloat(document.getElementById('valorB').value.replace(',', '.'));
-        const c = parseFloat(document.getElementById('valorC').value.replace(',', '.'));
+    const a = parseFloat(document.getElementById('valorA').value.replace(',', '.'));
+    const b = parseFloat(document.getElementById('valorB').value.replace(',', '.'));
+    const c = parseFloat(document.getElementById('valorC').value.replace(',', '.'));
 
-        if (isNaN(a) || isNaN(b) || isNaN(c)) {
-            resultado.innerHTML = '<p>Por favor, insira números válidos para A, B e C.</p>';
-            return;
-        }
+    if (isNaN(a) || isNaN(b) || isNaN(c)) {
+      resultado.innerHTML = '<p>Por favor, insira números válidos para A, B e C.</p>';
+      return;
+    }
 
-        if (a === 0) {
-            resultado.innerHTML = '<p>O valor de A não pode ser zero. Isso deixaria de ser uma equação do segundo grau.</p>';
-            return;
-        }
+    if (a === 0) {
+      resultado.innerHTML = '<p>O valor de A não pode ser zero. Isso deixaria de ser uma equação do segundo grau.</p>';
+      return;
+    }
 
-        const delta = b * b - 4 * a * c;
-        const raizDelta = Math.sqrt(delta);
-        const x1Numerador = -b + raizDelta;
-        const x2Numerador = -b - raizDelta;
-        const denominador = 2 * a;
-        const x1 = x1Numerador / denominador;
-        const x2 = x2Numerador / denominador;
-        const xvNumerador = -b;
-        const xv = xvNumerador / denominador;
-        const yvNumerador = -delta;
-        const yv = yvNumerador / (4 * a);
+    const delta = b * b - 4 * a * c;
+    const raizDelta = Math.sqrt(delta);
+    const x1Numerador = -b + raizDelta;
+    const x2Numerador = -b - raizDelta;
+    const denominador = 2 * a;
+    const x1 = x1Numerador / denominador;
+    const x2 = x2Numerador / denominador;
+    const xvNumerador = -b;
+    const xv = xvNumerador / denominador;
+    const yvNumerador = -delta;
+    const yv = yvNumerador / (4 * a);
 
-        resultado.innerHTML = `
+    resultado.innerHTML = `
       <h2>Resolvendo a equação passo a passo</h2>
       <p><strong>1. Identificando os valores:</strong></p>
       <p>A = ${a}, B = ${b}, C = ${c}</p>
@@ -112,136 +114,135 @@ function calculadoraBhaskara() {
       </ul>
     `;
 
-        document.getElementById('legendaGrafico').innerHTML = `
+    document.getElementById('legendaGrafico').innerHTML = `
       <strong>🔎 Legenda do gráfico:</strong><br>
       🔵 Ponto azul: vértice da parábola<br>
       🔴 Pontos vermelhos: raízes da equação<br>
       📍 Linha pontilhada: posição do vértice no eixo X
     `;
 
+    const pontosX = [];
+    const pontosY = [];
+    const inicio = xv - 10;
+    const fim = xv + 10;
 
-        const pontosX = [];
-        const pontosY = [];
-        const inicio = xv - 10;
-        const fim = xv + 10;
+    for (let x = inicio; x <= fim; x += 0.5) {
+      const y = a * x * x + b * x + c;
+      pontosX.push(x);
+      pontosY.push(y);
+    }
 
-        for (let x = inicio; x <= fim; x += 0.5) {
-            const y = a * x * x + b * x + c;
-            pontosX.push(x);
-            pontosY.push(y);
-        }
-
-        const ctx = document.getElementById('graficoParabola').getContext('2d');
-        if (window.graficoBhaskara) {
-            window.graficoBhaskara.destroy();
-        }
-
-        window.graficoBhaskara = new Chart(ctx, {
-            type: 'line',
-            data: {
-                datasets: [
-                    {
-                        label: 'Parábola',
-                        data: pontosX.map((x, i) => ({
-                            x: x,
-                            y: pontosY[i]
-                        })),
-                        borderColor: 'rgb(13, 106, 134)',
-                        backgroundColor: 'rgba(13, 106, 134, 0.2)',
-                        fill: true,
-                        pointRadius: 0,
-                        tension: 0.2
-                    },
-                    {
-                        label: 'Raízes',
-                        data: [
-                            { x: x1, y: 0 },
-                            { x: x2, y: 0 }
-                        ],
-                        backgroundColor: 'red',
-                        pointRadius: 6,
-                        showLine: false
-                    },
-                    {
-                        label: 'Vértice',
-                        data: [{ x: xv, y: yv }],
-                        backgroundColor: 'blue',
-                        pointRadius: 6,
-                        showLine: false
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        display: false
-                    },
-                    tooltip: {
-                        enabled: true,
-                        callbacks: {
-                            label: function (context) {
-                                const x = context.parsed.x.toFixed(2);
-                                const y = context.parsed.y.toFixed(2);
-                                return `(${x}, ${y})`;
-                            }
-                        }
-                    }
-                },
-                scales: {
-                    x: {
-                        type: 'linear',
-                        title: {
-                            display: true,
-                            text: 'x'
-                        },
-                        grid: {
-                            drawOnChartArea: true
-                        }
-                    },
-                    y: {
-                        title: {
-                            display: true,
-                            text: 'y'
-                        }
-                    }
-                },
-                elements: {
-                    line: {
-                        borderWidth: 2
-                    }
-                }
-            },
-            plugins: [{
-                id: 'linha-vertice',
-                beforeDraw: chart => {
-                    const ctx = chart.ctx;
-                    const xScale = chart.scales.x;
-                    const topY = chart.chartArea.top;
-                    const bottomY = chart.chartArea.bottom;
-                    const xPixel = xScale.getPixelForValue(xv);
-                    ctx.save();
-                    ctx.beginPath();
-                    ctx.setLineDash([5, 5]);
-                    ctx.moveTo(xPixel, topY);
-                    ctx.lineTo(xPixel, bottomY);
-                    ctx.strokeStyle = 'gray';
-                    ctx.lineWidth = 1;
-                    ctx.stroke();
-                    ctx.restore();
-                }
-            }]
-        });
-        botaoResetar.addEventListener('click', function () {
-            form.reset();
-            resultado.innerHTML = '';
-            document.getElementById('legendaGrafico').innerHTML = '';
-            if (window.graficoBhaskara) {
-                window.graficoBhaskara.destroy();
+    const ctx = document.getElementById('graficoParabola').getContext('2d');
+    if (window.graficoBhaskara) {
+      window.graficoBhaskara.destroy();
+    }
+    window.graficoBhaskara = new Chart(ctx, {
+      type: 'line',
+      data: {
+        datasets: [
+          {
+            label: 'Parábola',
+            data: pontosX.map((x, i) => ({
+              x: x,
+              y: pontosY[i]
+            })),
+            borderColor: 'rgb(13, 106, 134)',
+            backgroundColor: 'rgba(13, 106, 134, 0.2)',
+            fill: true,
+            pointRadius: 0,
+            tension: 0.2
+          },
+          {
+            label: 'Raízes',
+            data: [
+              { x: x1, y: 0 },
+              { x: x2, y: 0 }
+            ],
+            backgroundColor: 'red',
+            pointRadius: 6,
+            showLine: false
+          },
+          {
+            label: 'Vértice',
+            data: [{ x: xv, y: yv }],
+            backgroundColor: 'blue',
+            pointRadius: 6,
+            showLine: false
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            display: false
+          },
+          tooltip: {
+            enabled: true,
+            callbacks: {
+              label: function (context) {
+                const x = context.parsed.x.toFixed(2);
+                const y = context.parsed.y.toFixed(2);
+                return `(${x}, ${y})`;
+              }
             }
-        });
+          }
+        },
+        scales: {
+          x: {
+            type: 'linear',
+            title: {
+              display: true,
+              text: 'x'
+            },
+            grid: {
+              drawOnChartArea: true
+            }
+          },
+          y: {
+            title: {
+              display: true,
+              text: 'y'
+            }
+          }
+        },
+        elements: {
+          line: {
+            borderWidth: 2
+          }
+        }
+      },
+      plugins: [{
+        id: 'linha-vertice',
+        beforeDraw: chart => {
+          const ctx = chart.ctx;
+          const xScale = chart.scales.x;
+          const topY = chart.chartArea.top;
+          const bottomY = chart.chartArea.bottom;
+          const xPixel = xScale.getPixelForValue(xv);
+          ctx.save();
+          ctx.beginPath();
+          ctx.setLineDash([5, 5]);
+          ctx.moveTo(xPixel, topY);
+          ctx.lineTo(xPixel, bottomY);
+          ctx.strokeStyle = 'gray';
+          ctx.lineWidth = 1;
+          ctx.stroke();
+          ctx.restore();
+        }
+      }]
     });
+
+    botaoResetar.addEventListener('click', function () {
+      form.reset();
+      resultado.innerHTML = '';
+      document.getElementById('legendaGrafico').innerHTML = '';
+      if (window.graficoBhaskara) {
+        window.graficoBhaskara.destroy();
+      }
+    });
+  });
 }
-    
+
 gerarExemploComDeltaPositivo();
 calculadoraBhaskara();
