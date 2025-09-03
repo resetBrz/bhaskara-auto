@@ -1,180 +1,35 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Calculadora de Bhaskara</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
-    :root {
-      --primary-color: rgb(13, 106, 134);
-      --primary-color-darker: rgb(10, 84, 107);
-    }
-    * {
-      box-sizing: border-box;
-      outline: 0;
-    }
-
-    body {
-      margin: 0;
-      padding: 0;
-      background: var(--primary-color);
-      font-family: 'Montserrat', sans-serif;
-      font-size: 1.3em;
-      line-height: 1.5em;
-    }
-
-    .container {
-      max-width: 640px;
-      margin: 50px auto;
-      background: #fff;
-      padding: 20px;
-      border-radius: 15px;
-    }
-
-    form input, form label, form button {
-      display: block;
-      width: 100%;
-      margin-bottom: 10px;
-    }
-
-    form input {
-      font-size: 24px;
-      height: 50px;
-      padding: 0 20px;
-    }
-
-    form input:focus {
-      outline: 1px solid var(--primary-color);
-    }
-
-    form button {
-      border: none;
-      background: var(--primary-color);
-      color: #fff;
-      font-size: 18px;
-      font-weight: 700;
-      height: 50px;
-      width: 300px;
-      cursor: pointer;
-      margin-top: 1px;
-    }
-
-    form button:hover {
-      background: var(--primary-color-darker);
-    }
-
-    .resultado {
-      margin-top: 20px;
-      font-size: 1.2em;
-    }
-
-    .botoes {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <section class="container">
     <h1>Calculadora de Bhaskara</h1>
     <form id="formularioBhaskara">
       <label for="valorA">Valor de A</label>
-      <input type="number" id="valorA" required placeholder="Ex: 1">
+      <input type="text" id="valorA" required />
 
       <label for="valorB">Valor de B</label>
-      <input type="number" id="valorB" required placeholder="Ex: -3">
+      <input type="text" id="valorB" required />
 
       <label for="valorC">Valor de C</label>
-      <input type="number" id="valorC" required placeholder="Ex: 2">
+      <input type="text" id="valorC" required />
 
       <div class="botoes">
         <button type="submit">Calcular</button>
         <button type="button" id="botaoResetar">Resetar</button>
+        <button type="button" id="botaoAjuda">❓ Como preencher A, B e C?</button>
       </div>
     </form>
 
+    <div class="explicacao"></div>
     <div class="resultado"></div>
   </section>
 
-  <script>
-    function calculadoraBhaskara() {
-      const form = document.getElementById('formularioBhaskara')
-      const resultado = document.querySelector('.resultado')
-      const botaoResetar = document.getElementById('botaoResetar')
-
-      form.addEventListener('submit', function(event) {
-        event.preventDefault()
-
-        const a = parseFloat(document.getElementById('valorA').value)
-        const b = parseFloat(document.getElementById('valorB').value)
-        const c = parseFloat(document.getElementById('valorC').value)
-
-        if (a === 0) {
-          resultado.innerHTML = '<p>O valor de A não pode ser zero. Isso deixaria de ser uma equação do segundo grau.</p>'
-          return
-        }
-
-        const delta = b * b - 4 * a * c
-        let x1, x2, passoRaizes
-
-        if (delta < 0) {
-          passoRaizes = '<p>Como o Delta é menor que zero, não existem raízes reais. A equação não cruza o eixo X.</p>'
-        } else {
-          x1 = (-b + Math.sqrt(delta)) / (2 * a)
-          x2 = (-b - Math.sqrt(delta)) / (2 * a)
-          passoRaizes = `
-            <p>Usamos a fórmula: x = (-b ± √Δ) / (2a)</p>
-            <p>x₁ = (-${b} + √${delta}) / (2 × ${a}) = <strong>${x1.toFixed(2)}</strong></p>
-            <p>x₂ = (-${b} - √${delta}) / (2 × ${a}) = <strong>${x2.toFixed(2)}</strong></p>
-          `
-        }
-
-        const xv = -b / (2 * a)
-        const yv = -delta / (4 * a)
-        const concavidade = a > 0 ? 'para cima (sorrindo 😊)' : 'para baixo (triste 😢)'
-
-        resultado.innerHTML = `
-          <h2>Resultado</h2>
-          <p><strong>1. Valores informados:</strong> a = ${a}, b = ${b}, c = ${c}</p>
-
-          <p><strong>2. Calculando o Delta (Δ):</strong></p>
-          <p>Δ = b² - 4ac = (${b})² - 4 × ${a} × ${c} = <strong>${delta}</strong></p>
-
-          <p><strong>3. Raízes da equação:</strong></p>
-          ${passoRaizes}
-
-          <p><strong>4. Vértice da parábola:</strong></p>
-          <p>O vértice é o ponto mais alto ou mais baixo da curva.</p>
-          <p>xᵥ = -b / 2a = -(${b}) / (2 × ${a}) = <strong>${xv.toFixed(2)}</strong></p>
-          <p>yᵥ = -Δ / 4a = -(${delta}) / (4 × ${a}) = <strong>${yv.toFixed(2)}</strong></p>
-
-          <p><strong>5. Concavidade:</strong></p>
-          <p>Como a = ${a}, a parábola está voltada <strong>${concavidade}</strong></p>
-
-          <hr>
-          <h3>✅ Resumo Final:</h3>
-          <ul>
-            <li>Delta (Δ): ${delta}</li>
-            ${delta >= 0 ? `
-              <li>Raízes: x₁ = ${x1.toFixed(2)}, x₂ = ${x2.toFixed(2)}</li>
-            ` : `
-              <li>Raízes: Não existem raízes reais</li>
-            `}
-            <li>Vértice: (${xv.toFixed(2)}, ${yv.toFixed(2)})</li>
-            <li>Concavidade: ${concavidade}</li>
-          </ul>
-        `
-      })
-
-      botaoResetar.addEventListener('click', function() {
-        form.reset()
-        resultado.innerHTML = ''
-      })
-    }
-
-    calculadoraBhaskara()
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
