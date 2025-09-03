@@ -190,15 +190,18 @@ function calculadoraBhaskara() {
         },
         scales: {
           x: {
-            type: 'linear',
-            title: {
-              display: true,
-              text: 'x'
-            },
-            grid: {
-              drawOnChartArea: true
-            }
+              type: 'linear',
+              title: {
+                display: true,
+                text: 'x'
+              },
+              grid: {
+                drawOnChartArea: true
+              },
+              min: Math.min(x1, x2, xv) - 2,
+              max: Math.max(x1, x2, xv) + 2
           },
+
           y: {
             title: {
               display: true,
