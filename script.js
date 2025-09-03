@@ -110,12 +110,15 @@ function calculadoraBhaskara() {
         <li>Vértice: (${xv.toFixed(2)}, ${yv.toFixed(2)})</li>
         <li>Concavidade: ${a > 0 ? 'para cima' : 'para baixo'}</li>
       </ul>
-      <p style="margin-top:20px; font-size:0.9em; color:#555;">
-        🔵 Ponto azul: vértice da parábola<br>
-        🔴 Pontos vermelhos: raízes da equação<br>
-        📍 Linha pontilhada: posição do vértice no eixo X
-      </p>
     `;
+
+    document.getElementById('legendaGrafico').innerHTML = `
+      <strong>🔎 Legenda do gráfico:</strong><br>
+      🔵 Ponto azul: vértice da parábola<br>
+      🔴 Pontos vermelhos: raízes da equação<br>
+      📍 Linha pontilhada: posição do vértice no eixo X
+    `;
+
 
     const pontosX = [];
     const pontosY = [];
