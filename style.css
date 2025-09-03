@@ -90,3 +90,14 @@ canvas {
   background: #f9f9f9;
   border-radius: 10px;
 }
+
+.legenda-grafico {
+  margin-top: 15px;
+  font-size: 0.95em;
+  color: #333;
+  background: #eef;
+  padding: 10px;
+  border-radius: 8px;
+  line-height: 1.6em;
+}
+
