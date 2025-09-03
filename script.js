@@ -115,7 +115,6 @@ function calculadoraBhaskara() {
     document.getElementById('legendaGrafico').innerHTML = `
       <strong>🔎 Legenda do gráfico:</strong><br>
       🔵 Ponto azul: vértice da parábola<br>
-      🔴 Pontos vermelhos: raízes da equação<br>
       📍 Linha pontilhada: posição do vértice no eixo X
     `;
 
