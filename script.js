@@ -57,11 +57,15 @@ function calculadoraBhaskara() {
 
     const delta = b * b - 4 * a * c;
     const raizDelta = Math.sqrt(delta);
-    const x1 = (-b + raizDelta) / (2 * a);
-    const x2 = (-b - raizDelta) / (2 * a);
-    const xv = -b / (2 * a);
-    const yv = -delta / (4 * a);
-    const concavidade = a > 0 ? 'para cima' : 'para baixo';
+    const x1Numerador = -b + raizDelta;
+    const x2Numerador = -b - raizDelta;
+    const denominador = 2 * a;
+    const x1 = x1Numerador / denominador;
+    const x2 = x2Numerador / denominador;
+    const xvNumerador = -b;
+    const xv = xvNumerador / denominador;
+    const yvNumerador = -delta;
+    const yv = yvNumerador / (4 * a);
 
     resultado.innerHTML = `
       <h2>Resolvendo a equação passo a passo</h2>
@@ -83,26 +87,33 @@ function calculadoraBhaskara() {
       <p>x = (-b ± √Δ) / (2a)</p>
 
       <p><strong>Calculando x₁:</strong></p>
-      <p>x₁ = (-(${b}) + ${raizDelta.toFixed(2)}) / (2 × ${a})</p>
-      <p>x₁ = (${(-b).toFixed(2)} + ${raizDelta.toFixed(2)}) / ${2 * a}</p>
-      <p>x₁ = ${(x1).toFixed(2)}</p>
+      <p>x₁ = (-( ${b} ) + ${raizDelta.toFixed(2)}) / (2 × ${a})</p>
+      <p>x₁ = (${(-b).toFixed(2)} + ${raizDelta.toFixed(2)}) / ${denominador}</p>
+      <p>x₁ = ${(x1Numerador).toFixed(2)} / ${denominador}</p>
+      <p>x₁ = ${x1.toFixed(2)}</p>
 
       <p><strong>Calculando x₂:</strong></p>
-      <p>x₂ = (-(${b}) - ${raizDelta.toFixed(2)}) / (2 × ${a})</p>
-      <p>x₂ = (${(-b).toFixed(2)} - ${raizDelta.toFixed(2)}) / ${2 * a}</p>
-      <p>x₂ = ${(x2).toFixed(2)}</p>
+      <p>x₂ = (-( ${b} ) - ${raizDelta.toFixed(2)}) / (2 × ${a})</p>
+      <p>x₂ = (${(-b).toFixed(2)} - ${raizDelta.toFixed(2)}) / ${denominador}</p>
+      <p>x₂ = ${(x2Numerador).toFixed(2)} / ${denominador}</p>
+      <p>x₂ = ${x2.toFixed(2)}</p>
 
       <p><strong>5. Calculando o vértice da parábola:</strong></p>
       <p>xᵥ = -b / (2a)</p>
       <p>xᵥ = -(${b}) / (2 × ${a})</p>
+      <p>xᵥ = ${xvNumerador} / ${denominador}</p>
       <p>xᵥ = ${xv.toFixed(2)}</p>
 
       <p>yᵥ = -Δ / (4a)</p>
       <p>yᵥ = -(${delta}) / (4 × ${a})</p>
+      <p>yᵥ = ${yvNumerador} / ${4 * a}</p>
       <p>yᵥ = ${yv.toFixed(2)}</p>
 
       <p><strong>6. Concavidade da parábola:</strong></p>
-      <p>Como A = ${a}, a parábola é voltada <strong>${concavidade}</strong>.</p>
+      <p>Para saber se a parábola é voltada para cima ou para baixo, olhamos o valor de A.</p>
+      <p>Se A for positivo, a parábola é voltada para cima.</p>
+      <p>Se A for negativo, a parábola é voltada para baixo.</p>
+      <p>Como A = ${a} é ${a > 0 ? 'positivo' : 'negativo'}, a parábola é voltada <strong>${a > 0 ? 'para cima' : 'para baixo'}</strong>.</p>
 
       <hr>
       <h3>✅ Resumo Final</h3>
@@ -110,7 +121,7 @@ function calculadoraBhaskara() {
         <li>Delta (Δ): ${delta}</li>
         <li>Raízes: x₁ = ${x1.toFixed(2)}, x₂ = ${x2.toFixed(2)}</li>
         <li>Vértice: (${xv.toFixed(2)}, ${yv.toFixed(2)})</li>
-        <li>Concavidade: ${concavidade}</li>
+        <li>Concavidade: ${a > 0 ? 'para cima' : 'para baixo'}</li>
       </ul>
     `;
   });
