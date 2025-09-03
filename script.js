@@ -115,8 +115,10 @@ function calculadoraBhaskara() {
     document.getElementById('legendaGrafico').innerHTML = `
       <strong>🔎 Legenda do gráfico:</strong><br>
       🔵 Ponto azul: vértice da parábola<br>
+      🔴 Pontos vermelhos: raízes da equação<br>
       📍 Linha pontilhada: posição do vértice no eixo X
     `;
+
 
 
     const pontosX = [];
@@ -141,7 +143,10 @@ function calculadoraBhaskara() {
         datasets: [
           {
             label: 'Parábola',
-            data: pontosY,
+            data: pontosX.map((x, i) => ({
+              x: parseFloat(x),
+              y: parseFloat(pontosY[i])
+            })),
             borderColor: 'rgb(13, 106, 134)',
             backgroundColor: 'rgba(13, 106, 134, 0.2)',
             fill: true,
