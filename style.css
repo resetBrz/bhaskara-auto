@@ -3,6 +3,9 @@
 :root {
   --primary-color: rgb(13, 106, 134);
   --primary-color-darker: rgb(10, 84, 107);
+  --accent-color: #0a74da;
+  --light-bg: #f9f9f9;
+  --soft-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 * {
@@ -13,18 +16,29 @@
 body {
   margin: 0;
   padding: 0;
-  background: var(--primary-color);
+  background: linear-gradient(to bottom right, var(--primary-color), var(--accent-color));
   font-family: 'Montserrat', sans-serif;
-  font-size: 1.2em;
-  line-height: 1.5em;
+  font-size: 1.1em;
+  line-height: 1.6em;
+  color: #333;
 }
 
+h1 {
+  font-size: 2em;
+  font-weight: 700;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #000;
+}
+
+
 .container {
-  max-width: 640px;
+  max-width: 680px;
   margin: 50px auto;
   background: #fff;
-  padding: 20px;
+  padding: 30px 25px;
   border-radius: 15px;
+  box-shadow: var(--soft-shadow);
 }
 
 form input,
@@ -32,17 +46,21 @@ form label,
 form button {
   display: block;
   width: 100%;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
 form input {
-  font-size: 22px;
+  font-size: 20px;
   height: 50px;
-  padding: 0 20px;
+  padding: 0 18px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  transition: box-shadow 0.3s ease, border 0.3s ease;
 }
 
 form input:focus {
-  outline: 1px solid var(--primary-color);
+  border: 2px solid var(--primary-color);
+  box-shadow: 0 0 6px rgba(13, 106, 134, 0.4);
 }
 
 form button {
@@ -52,19 +70,14 @@ form button {
   font-size: 18px;
   font-weight: 700;
   height: 50px;
-  width: 100%;
   cursor: pointer;
-  margin-top: 5px;
   border-radius: 8px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 form button:hover {
   background: var(--primary-color-darker);
-}
-
-.resultado {
-  margin-top: 20px;
-  font-size: 1.1em;
+  transform: scale(1.02);
 }
 
 .botoes {
@@ -73,12 +86,18 @@ form button:hover {
   gap: 10px;
 }
 
+.resultado {
+  margin-top: 20px;
+  font-size: 1.1em;
+}
+
 .explicacao {
   display: none;
   margin-top: 20px;
   background: #eef;
   padding: 15px;
   border-radius: 10px;
+  box-shadow: var(--soft-shadow);
 }
 
 .explicacao ul {
@@ -87,8 +106,9 @@ form button:hover {
 
 canvas {
   margin-top: 30px;
-  background: #f9f9f9;
+  background: var(--light-bg);
   border-radius: 10px;
+  box-shadow: var(--soft-shadow);
 }
 
 .legenda-grafico {
@@ -99,4 +119,80 @@ canvas {
   padding: 10px;
   border-radius: 8px;
   line-height: 1.6em;
+  box-shadow: var(--soft-shadow);
+}
+
+#botaoBaixarGrafico {
+  margin-top: 15px;
+  padding: 8px 16px;
+  background-color: var(--accent-color);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#botaoBaixarGrafico:hover {
+  background-color: #095bb5;
+  transform: scale(1.02);
+}
+
+.resumo-exportar {
+  margin-top: 30px;
+}
+
+.resumo-exportar button {
+  margin-right: 10px;
+  margin-top: 10px;
+  padding: 8px 14px;
+  background-color: var(--accent-color);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.resumo-exportar button:hover {
+  background-color: #095bb5;
+  transform: scale(1.02);
+}
+
+#campoResumo {
+  margin-top: 10px;
+  width: 100%;
+  height: 200px;
+  font-family: monospace;
+  font-size: 1em;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: var(--light-bg);
+  resize: vertical;
+  box-shadow: var(--soft-shadow);
+}
+
+/* Responsividade para celular */
+@media (max-width: 480px) {
+  .container {
+    margin: 20px;
+    padding: 20px;
+  }
+
+  form input {
+    font-size: 18px;
+    height: 45px;
+  }
+
+  form button {
+    font-size: 16px;
+    height: 45px;
+  }
+
+  #campoResumo {
+    height: 150px;
+  }
 }
