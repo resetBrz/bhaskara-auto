@@ -68,49 +68,40 @@ function calculadoraBhaskara() {
       <h2>Resolvendo a equação passo a passo</h2>
       <p><strong>1. Identificando os valores:</strong></p>
       <p>A = ${a}, B = ${b}, C = ${c}</p>
-
       <p><strong>2. Calculando o Delta (Δ):</strong></p>
       <p>Δ = b² - 4ac</p>
       <p>Δ = (${b})² - 4 × ${a} × ${c}</p>
       <p>Δ = ${b * b} - 4 × ${a} × ${c}</p>
       <p>Δ = ${b * b} - ${4 * a * c}</p>
       <p>Δ = ${delta}</p>
-
       <p><strong>3. Calculando a raiz quadrada de Δ:</strong></p>
       <p>√Δ = √${delta} = ${raizDelta.toFixed(2)}</p>
-
       <p><strong>4. Aplicando a fórmula de Bhaskara:</strong></p>
       <p>x = (-b ± √Δ) / (2a)</p>
-
       <p><strong>Calculando x₁:</strong></p>
       <p>x₁ = (-(${b}) + ${raizDelta.toFixed(2)}) / (2 × ${a})</p>
       <p>x₁ = (${(-b).toFixed(2)} + ${raizDelta.toFixed(2)}) / ${denominador}</p>
       <p>x₁ = ${(x1Numerador).toFixed(2)} / ${denominador}</p>
       <p>x₁ = ${x1.toFixed(2)}</p>
-
       <p><strong>Calculando x₂:</strong></p>
       <p>x₂ = (-(${b}) - ${raizDelta.toFixed(2)}) / (2 × ${a})</p>
       <p>x₂ = (${(-b).toFixed(2)} - ${raizDelta.toFixed(2)}) / ${denominador}</p>
       <p>x₂ = ${(x2Numerador).toFixed(2)} / ${denominador}</p>
       <p>x₂ = ${x2.toFixed(2)}</p>
-
       <p><strong>5. Calculando o vértice da parábola:</strong></p>
       <p>xᵥ = -b / (2a)</p>
       <p>xᵥ = -(${b}) / (2 × ${a})</p>
       <p>xᵥ = ${xvNumerador} / ${denominador}</p>
       <p>xᵥ = ${xv.toFixed(2)}</p>
-
       <p>yᵥ = -Δ / (4a)</p>
       <p>yᵥ = -(${delta}) / (4 × ${a})</p>
       <p>yᵥ = ${yvNumerador} / ${4 * a}</p>
       <p>yᵥ = ${yv.toFixed(2)}</p>
-
       <p><strong>6. Concavidade da parábola:</strong></p>
       <p>Para saber se a parábola é voltada para cima ou para baixo, olhamos o valor de A.</p>
       <p>Se A for positivo (maior que zero), a parábola é voltada para cima.</p>
       <p>Se A for negativo (menor que zero), a parábola é voltada para baixo.</p>
       <p>Como A = ${a} é ${a > 0 ? 'positivo' : 'negativo'}, a parábola é voltada <strong>${a > 0 ? 'para cima' : 'para baixo'}</strong>.</p>
-
       <hr>
       <h3>✅ Resumo Final</h3>
       <ul>
@@ -119,6 +110,11 @@ function calculadoraBhaskara() {
         <li>Vértice: (${xv.toFixed(2)}, ${yv.toFixed(2)})</li>
         <li>Concavidade: ${a > 0 ? 'para cima' : 'para baixo'}</li>
       </ul>
+      <p style="margin-top:20px; font-size:0.9em; color:#555;">
+        🔵 Ponto azul: vértice da parábola<br>
+        🔴 Pontos vermelhos: raízes da equação<br>
+        📍 Linha pontilhada: posição do vértice no eixo X
+      </p>
     `;
 
     const pontosX = [];
@@ -135,36 +131,94 @@ function calculadoraBhaskara() {
     if (window.graficoBhaskara) {
       window.graficoBhaskara.destroy();
     }
-
+    
     window.graficoBhaskara = new Chart(ctx, {
       type: 'line',
       data: {
         labels: pontosX,
-        datasets: [{
-          label: 'Parábola',
-          data: pontosY,
-          borderColor: 'rgb(13, 106, 134)',
-          backgroundColor: 'rgba(13, 106, 134, 0.2)',
-          fill: true,
-          pointRadius: 0,
-          tension: 0.2
-        }]
+        datasets: [
+          {
+            label: 'Parábola',
+            data: pontosY,
+            borderColor: 'rgb(13, 106, 134)',
+            backgroundColor: 'rgba(13, 106, 134, 0.2)',
+            fill: true,
+            pointRadius: 0,
+            tension: 0.2
+          },
+          {
+            label: 'Raízes',
+            data: [
+              { x: x1.toFixed(2), y: 0 },
+              { x: x2.toFixed(2), y: 0 }
+            ],
+            borderColor: 'transparent',
+            backgroundColor: 'red',
+            pointRadius: 6,
+            showLine: false
+          },
+          {
+            label: 'Vértice',
+            data: [{ x: xv.toFixed(2), y: yv.toFixed(2) }],
+            borderColor: 'transparent',
+            backgroundColor: 'blue',
+            pointRadius: 6,
+            showLine: false
+          }
+        ]
       },
       options: {
         responsive: true,
         plugins: {
-          legend: { display: false },
-          tooltip: { enabled: true }
+          legend: {
+            display: false
+          },
+          tooltip: {
+            enabled: true
+          }
         },
         scales: {
           x: {
-            title: { display: true, text: 'x' }
+            title: {
+              display: true,
+              text: 'x'
+            },
+            grid: {
+              drawOnChartArea: true
+            }
           },
           y: {
-            title: { display: true, text: 'y' }
+            title: {
+              display: true,
+              text: 'y'
+            }
+          }
+        },
+        elements: {
+          line: {
+            borderWidth: 2
           }
         }
-      }
+      },
+      plugins: [{
+        id: 'linha-vertice',
+        beforeDraw: chart => {
+          const ctx = chart.ctx;
+          const xScale = chart.scales.x;
+          const topY = chart.chartArea.top;
+          const bottomY = chart.chartArea.bottom;
+          const xPixel = xScale.getPixelForValue(xv.toFixed(2));
+          ctx.save();
+          ctx.beginPath();
+          ctx.setLineDash([5, 5]);
+          ctx.moveTo(xPixel, topY);
+          ctx.lineTo(xPixel, bottomY);
+          ctx.strokeStyle = 'gray';
+          ctx.lineWidth = 1;
+          ctx.stroke();
+          ctx.restore();
+        }
+      }]
     });
   });
 
@@ -179,4 +233,3 @@ function calculadoraBhaskara() {
 
 gerarExemploComDeltaPositivo();
 calculadoraBhaskara();
-
