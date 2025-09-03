@@ -123,22 +123,19 @@ function calculadoraBhaskara() {
 
     const pontosX = [];
     const pontosY = [];
-    const inicio = xv - 10;
-    const fim = xv + 10;
-
-    for (let x = inicio; x <= fim; x += 0.5) {
+    const inicio = Math.min(x1, x2, xv) - 2;
+    const fim = Math.max(x1, x2, xv) + 2;
+    
+    for (let x = inicio; x <= fim; x += 0.1) {
       const y = a * x * x + b * x + c;
       pontosX.push(x);
       pontosY.push(y);
     }
-
+    
     const ctx = document.getElementById('graficoParabola').getContext('2d');
     if (window.graficoBhaskara) {
       window.graficoBhaskara.destroy();
     }
-    
-    const minX = Math.min(x1, x2, xv) - 2;
-    const maxX = Math.max(x1, x2, xv) + 2;
     
     window.graficoBhaskara = new Chart(ctx, {
       type: 'line',
@@ -195,8 +192,8 @@ function calculadoraBhaskara() {
         scales: {
           x: {
             type: 'linear',
-            min: minX,
-            max: maxX,
+            min: inicio,
+            max: fim,
             title: {
               display: true,
               text: 'x'
@@ -238,8 +235,7 @@ function calculadoraBhaskara() {
         }
       }]
     });
-
-
+    
     botaoResetar.addEventListener('click', function () {
       form.reset();
       resultado.innerHTML = '';
@@ -248,8 +244,7 @@ function calculadoraBhaskara() {
         window.graficoBhaskara.destroy();
       }
     });
-  });
-}
+
 
 gerarExemploComDeltaPositivo();
 calculadoraBhaskara();
