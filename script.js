@@ -165,8 +165,16 @@ function calculadoraBhaskara() {
             display: false
           },
           tooltip: {
-            enabled: true
-          }
+            enabled: true,
+            callbacks: {
+            label: function(context) {
+              const x = context.parsed.x;
+              const y = context.parsed.y;
+              return `(${x}, ${y})`;
+            }
+        }
+      }
+
         },
         scales: {
           x: {
