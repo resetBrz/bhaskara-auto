@@ -111,8 +111,8 @@ function calculadoraBhaskara() {
 
       <p><strong>6. Concavidade da parábola:</strong></p>
       <p>Para saber se a parábola é voltada para cima ou para baixo, olhamos o valor de A.</p>
-      <p>Se A for positivo, a parábola é voltada para cima.</p>
-      <p>Se A for negativo, a parábola é voltada para baixo.</p>
+      <p>Se A for <strong>positivo</strong> (maior que zero), a parábola é voltada <strong>para cima</strong>.</p>
+      <p>Se A for <strong>negativo</strong> (menor que zero), a parábola é voltada <strong>para baixo</strong>.</p>
       <p>Como A = ${a} é ${a > 0 ? 'positivo' : 'negativo'}, a parábola é voltada <strong>${a > 0 ? 'para cima' : 'para baixo'}</strong>.</p>
 
       <hr>
