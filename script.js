@@ -247,5 +247,5 @@ function calculadoraBhaskara() {
   });
 }
 
-gerarExemploComDeltaPositivo();
-calculadoraBhaskara();
+gerarExemploComDeltaPositivo()
+calculadoraBhaskara()
