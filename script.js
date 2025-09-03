@@ -148,14 +148,27 @@ function calculadoraBhaskara() {
             pointRadius: 0,
             tension: 0.2
           },
+            {
+              label: 'Raízes',
+              data: [
+                { x: x1, y: 0 },
+                { x: x2, y: 0 }
+              ],
+              borderColor: 'transparent',
+              backgroundColor: 'red',
+              pointRadius: 6,
+              showLine: false
+          },
           {
             label: 'Vértice',
-            data: [{ x: xv.toFixed(2), y: yv.toFixed(2) }],
+            data: [{ x: xv, y: yv }],
             borderColor: 'transparent',
             backgroundColor: 'blue',
             pointRadius: 6,
             showLine: false
           }
+
+        
         ]
       },
       options: {
